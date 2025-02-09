@@ -4,7 +4,7 @@ function ItemCard({ item, onUpdatePrice, onDelete }) {
     const [newPrice, setNewPrice] = useState("");
     const [showInput, setShowInput] = useState(false);
 
-    const handleUpdatePrice = () => {
+    function handleUpdatePrice() {
         const price = parseFloat(newPrice);
         if (!isNaN(price)) {
             onUpdatePrice(item.id, price);

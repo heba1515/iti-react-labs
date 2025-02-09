@@ -3,7 +3,7 @@ import { useState } from "react";
 function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("");
 
-    const handleInputChange = (e) => {
+    function handleInputChange(e) {
         const newQuery = e.target.value;
         setQuery(newQuery);
         onSearch(newQuery);

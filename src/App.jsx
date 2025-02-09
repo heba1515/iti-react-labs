@@ -12,16 +12,17 @@ function App() {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const updatePrice = (id, newPrice) => {
-    setItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, price: newPrice } : item
-      )
-    );
+  function updatePrice(id, newPrice) {
+    let itemsList = structuredClone(items)
+    let item = itemsList.find(item => item.id === id)
+    item.price = newPrice
+    setItems(itemsList)
   };
 
-  const deleteItem = (id) => {
-    setItems((items) => items.filter((item) => item.id !== id));
+  function deleteItem(id) {
+    let itemsList = structuredClone(items)
+    itemsList = itemsList.filter((item) => item.id !== id)
+    setItems(itemsList)
   };
 
   const filteredItems = items.filter((item) =>
