@@ -1,33 +1,49 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import SearchBar from "./components/SearchBar";
+import ItemCard from "./components/ItemCard";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems] = useState([
+    { id: 1, title: "Product 1", price: 123, imageUrl: "/src/assets/product-img1.webp" },
+    { id: 2, title: "Product 2", price: 456, imageUrl: "/src/assets/product-img2.jpg" },
+    { id: 3, title: "Product 3", price: 789, imageUrl: "/src/assets/product-img3.jpg" },
+  ]);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const updatePrice = (id, newPrice) => {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, price: newPrice } : item
+      )
+    );
+  };
+
+  const deleteItem = (id) => {
+    setItems((items) => items.filter((item) => item.id !== id));
+  };
+
+  const filteredItems = items.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container py-4">
+        <SearchBar onSearch={(query) => setSearchQuery(query)} />
+        <div className="row mt-4">
+          {filteredItems.map((item) => (
+            <div key={item.id} className="col-md-4 mb-4">
+              <ItemCard
+                item={item}
+                onUpdatePrice={updatePrice}
+                onDelete={deleteItem}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
