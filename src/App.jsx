@@ -1,45 +1,46 @@
-import React, { useState } from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout/layout';
-import Home from './components/Home/home';
-import About from './components/About/about';
-import Contact from './components/Contact/contact';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage';
-import Register from './components/Register/Register';
-import Login from './components/Login/Login';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
-import ProductDetails from './components/ProductDetails/ProductDetails';
-import Cart from './components/Cart/Cart';
 
 function App() {
+
+  const Home = lazy(()=>import('./components/Home/home'))
+  const About = lazy(()=>import('./components/About/about'))
+  const Contact = lazy(()=>import('./components/Contact/contact'))
+  const ProductDetails = lazy(()=>import('./components/ProductDetails/ProductDetails'))
+  const Register = lazy(()=>import('./components/Register/Register'))
+  const Login = lazy(()=>import('./components/Login/Login'))
+  const Cart = lazy(()=>import('./components/Cart/Cart'))
+  const NotFoundPage = lazy(()=>import('./components/NotFoundPage/NotFoundPage'))
 
   const routes = createBrowserRouter([
     {
       path: "", element: <Layout />, children: [
         {
-          path: "home", element: <ProtectedRoutes><Home /></ProtectedRoutes>
+          path: "home", element: <Suspense><ProtectedRoutes><Home /></ProtectedRoutes></Suspense>
         },
         {
-          path: "product-details/:id", element: <ProtectedRoutes><ProductDetails /></ProtectedRoutes>
+          path: "product-details/:id", element: <Suspense><ProtectedRoutes><ProductDetails /></ProtectedRoutes></Suspense>
         },
         {
-          path: "about", element: <ProtectedRoutes><About /></ProtectedRoutes>
+          path: "about", element: <Suspense><ProtectedRoutes><About /></ProtectedRoutes></Suspense>
         },
         {
-          path: "contact", element: <ProtectedRoutes><Contact /></ProtectedRoutes>
+          path: "contact", element: <Suspense><ProtectedRoutes><Contact /></ProtectedRoutes></Suspense>
         },
         {
-          path: "cart", element: <ProtectedRoutes><Cart /></ProtectedRoutes>
+          path: "cart", element: <Suspense><ProtectedRoutes><Cart /></ProtectedRoutes></Suspense>
         },
         {
-          path: "register", element: <Register />
+          path: "register", element: <Suspense><Register /></Suspense>
         },
         {
-          path: "login", element: <Login />
+          path: "login", element: <Suspense><Login /></Suspense>
         },
         {
-          path: "*", element: <NotFoundPage />
+          path: "*", element: <Suspense><NotFoundPage /></Suspense>
         }
       ]
     }

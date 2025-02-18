@@ -8,15 +8,19 @@ import App from './App.jsx'
 import CounterContextProvider from './Context/CounterContext.jsx';
 import TokenContextProvider from './Context/TokenContext.jsx';
 import CartProvider from './Context/CartContext.jsx';
+import { Provider } from 'react-redux';
+import myStore from './redux/store.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <CounterContextProvider>
-      <CartProvider>
-        <TokenContextProvider>
-          <App />
-        </TokenContextProvider>
-      </CartProvider>
-    </CounterContextProvider>
+    <Provider store={myStore}>
+      <CounterContextProvider>
+        <CartProvider>
+          <TokenContextProvider>
+            <App />
+          </TokenContextProvider>
+        </CartProvider>
+      </CounterContextProvider>
+    </Provider>
   </StrictMode>,
 )
